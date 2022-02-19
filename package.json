@@ -1,0 +1,30 @@
+{
+  "name": "discord_vote_bot",
+  "version": "1.0.0",
+  "description": "디스코드 투표봇",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "link-module-alias",
+    "doc": "jsdoc -c jsdoc.json"
+  },
+  "_moduleAliases": {
+    "#home": "./",
+    "#event": "./event",
+    "#models": "./models",
+    "#util": "./util"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "jsdoc": "^3.6.7",
+    "link-module-alias": "^1.2.0",
+    "mysql2": "^2.3.3",
+    "sequelize-auto": "^0.8.8",
+    "sqlite3": "^5.0.2"
+  }
+}
