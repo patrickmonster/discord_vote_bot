@@ -13,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     create_at: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     },
     explanation: {
       type: DataTypes.STRING(100),
