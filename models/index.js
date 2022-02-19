@@ -38,5 +38,10 @@ db.query = (type,query, ...replacements)=>{
 	type = type.toUpperCase();
 	return sequelize.query(`${type} ${query}`, { type: sequelize.QueryTypes[type] , replacements });
 }
+// 풀 쿼리식
+db.Q = (type,query, ...replacements)=>{
+	type = type.toUpperCase();
+	return sequelize.query(`${query}`, { type: sequelize.QueryTypes[type] , replacements });
+}
 
 module.exports = db;

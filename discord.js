@@ -37,8 +37,9 @@ const message = require('#event/message');
 const interaction = require('#event/interaction');
 const voiceStateUpdate = require('#event/voiceStateUpdate');
 
-
 // 샤드 이벤트
+const guildCreate = require('#event/guildCreate');
+const guildDelete = require('#event/guildDelete');
 const shardError = require('#event/shardError');
 
 
@@ -48,6 +49,9 @@ client.on('interactionCreate', interaction); // 상호작용
 
 client.on('voiceStateUpdate', voiceStateUpdate); // 음성채널 상태 업데이트
 
+// 길드 생성 이벤트
+client.on('guildCreate', guildCreate);
+client.on('guildDelete', guildDelete);
 client.on('shardError', shardError);
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
