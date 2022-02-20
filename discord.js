@@ -32,6 +32,7 @@ client.resetCompCmd = require('#event/init')(client); // 샤딩 명령 처리
 
 // 커맨드 관리자
 client.system_app = getCommands(`${__dirname}/app`); // 메세지 명령
+client.system_button = getCommands(`${__dirname}/button`); // 메세지 명령
 
 
 // 기본 이벤트
@@ -42,6 +43,7 @@ const voiceStateUpdate = require('#event/voiceStateUpdate');
 // 샤드 이벤트
 const guildCreate = require('#event/guildCreate');
 const guildDelete = require('#event/guildDelete');
+const threadDelete = require('#event/threadDelete');
 const shardError = require('#event/shardError');
 
 
@@ -54,6 +56,9 @@ client.on('voiceStateUpdate', voiceStateUpdate); // 음성채널 상태 업데�
 // 길드 생성 이벤트
 client.on('guildCreate', guildCreate);
 client.on('guildDelete', guildDelete);
+
+client.on('threadDelete', threadDelete);
+
 client.on('shardError', shardError);
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
