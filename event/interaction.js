@@ -6,9 +6,9 @@ const clickApp = require('#event/clickApp');
 function interactionSwitch(interaction){
 	switch(interaction.targetType){
 		case "USER" : // 유저 명령 (관리자)
-			return clickApp(interaction);
+			return clickApp(interaction, interaction.options.getUser("user"));
 		case "MESSAGE": // 메세지 명령 (관리자)
-			return clickApp(interaction, interaction.options.getMessage("message").content);
+			return clickApp(interaction, interaction.options.getMessage("message"));
 		case "CHAT_INPUT": // 
 			return clickCommand(interaction); // 명령 입력
 		default: // 버튼 및 기타 이벤트
@@ -26,10 +26,10 @@ function interactionSwitch(interaction){
 module.exports = function(interaction) {
 	if (!interaction.inGuild() || interaction.user.bot) return;
 	if (interaction.customId?.startsWith("F")){
-		interactionSwitch(interaction);
-	}else interaction.deferReply({fetchReply : false, ephemeral: true}).then(()=>{
-		interactionSwitch(interaction);
-	}).catch(_=>{
-		interaction.client._log(`Error to Interaction ${interaction.targetType}`);
-	}); // 응답실패
+		interaction.deferReply({fetchReply : false, ephemeral: true}).then(()=>{
+			interactionSwitch(interaction);
+		}).catch(_=>{
+			interaction.client._log(`Error to Interaction ${interaction.targetType}`);
+		}); // 응답실패
+	}else interactionSwitch(interaction);
 };

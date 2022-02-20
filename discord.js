@@ -4,7 +4,6 @@ require('dotenv').config();
 const { Client, Intents } = require('discord.js');
 const { query } = require('#models');
 
-
 const path = require("path");
 process.setMaxListeners(0);
 process.env.sep = path.sep;
@@ -30,6 +29,9 @@ const client = new Client({
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // 이벤트 관리자
 client.resetCompCmd = require('#event/init')(client); // 샤딩 명령 처리
+
+// 커맨드 관리자
+client.system_app = getCommands(`${__dirname}/app`); // 메세지 명령
 
 
 // 기본 이벤트

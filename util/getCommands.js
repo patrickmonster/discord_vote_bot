@@ -72,5 +72,14 @@ module.exports = function getCommands(target) {
 				}
 			}
 		},
+		getApp(){
+			return [...this.command.values()].map((cmd)=>{
+				return cmd.type == 1 ? {...cmd} : {
+					name : cmd.name,
+					type : cmd.type,
+					default_permission : cmd.default_permission,
+				};
+			})
+		}
 	};
 };
