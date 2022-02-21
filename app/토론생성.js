@@ -56,7 +56,7 @@ module.exports = {
 				etime.setDate(etime.getDate() + 1);// 24시간 뒤에 종료알림
 				
 				return guild.scheduledEvents.create({
-					name : `${channel.id}아카이브가 시작되었습니다`,
+					name : `${channel.id}토론이 시작되었습니다`,
 					scheduledStartTime : stime,
 					scheduledEndTime : etime, // 끝나는 시간
 					privacyLevel : "GUILD_ONLY", // PUBLIC / GUILD_ONLY
