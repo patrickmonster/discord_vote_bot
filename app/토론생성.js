@@ -3,7 +3,7 @@ const name = path.basename(__filename,".js");
 
 const { debate } = require("#models");// 디비
 const createUser = require("#util/createUser");// 디비
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu } = require("discord.js");
 /**
  * 토론을 생성합니다.
  * @param { String } name 이름
@@ -55,7 +55,7 @@ module.exports = {
 				etime.setDate(etime.getDate() + 1);// 24시간 뒤에 종료알림
 				
 				return guild.scheduledEvents.create({
-					name : `${title}에 대한 토론이 시작되었습니다.`,
+					name : `${channel.id}아카이브가 시작되었습니다`,
 					scheduledStartTime : stime,
 					scheduledEndTime : etime, // 끝나는 시간
 					privacyLevel : "GUILD_ONLY", // PUBLIC / GUILD_ONLY
@@ -90,18 +90,70 @@ module.exports = {
 						})
 					],
 					components : [
-						new MessageActionRow()
+						new MessageActionRow() // 메세지 전송속도
+							.addComponents(
+								new MessageSelectMenu({
+									customId : "debate time",
+									maxValues : 1,
+									minValues : 1,
+									placeholder : "채팅 속도입니다.",
+									options : [
+										{
+											label: '1',
+											description: '조금 빠른편입니다.',
+											value: '1',
+											default : false,
+										},
+										{
+											label: '5',
+											description: '장문의 타자로 치게 됩니다.',
+											value: '5',
+											default : false,
+										},
+										{
+											label: '10',
+											description: '다른 사람의 귀를 기울일 수 있습니다.',
+											value: '10',
+											default : false,
+										},
+										{
+											label: '20',
+											description: '생각할 시간을 줍니다.',
+											value: '20',
+											default : true,
+										},
+										{
+											label: '60',
+											description: '충분한 시간을 준 것 같습니다.',
+											value: '60',
+											default : false,
+										},
+									]
+								})
+							),
+						new MessageActionRow() //스레드에 관한 버튼처리 이벤트
 							.addComponents(
 								new MessageButton({
-									label: `토론종료`, style: 'PRIMARY',
+									label: `아카이브`, style: 'PRIMARY',
 									customId: `debate close ${channel.id}`,
-									emoji: { name: '❌' },
+									emoji: { name: '✔' },
 								}),
 								new MessageButton({
-									label: `토론내용을 XML`, style: 'PRIMARY',
-									customId: `debate xml ${channel.id}`,
-									emoji: { name: '📈' },
+									label: `아카이브 해제`, style: 'PRIMARY',
+									customId: `debate close ${channel.id}`,
+									disabled: true, emoji: { name: '💬' },
 								}),
+								new MessageButton({
+									label: `전체공유`, style: 'DANGER',// DANGER / PRIMARY
+									customId: `debate close ${channel.id}`,
+									disabled: false, emoji: { name: '📣' },
+								}),
+								
+								// new MessageButton({
+								// 	label: `토론내용을 XML`, style: 'PRIMARY',
+								// 	customId: `debate xml ${channel.id}`,
+								// 	emoji: { name: '📈' },
+								// }),
 							),
 					]
 				});

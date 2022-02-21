@@ -32,7 +32,7 @@ client.resetCompCmd = require('#event/init')(client); // 샤딩 명령 처리
 client._webhooks = new HookManager();
 
 // 커맨드 관리자
-client.system_app = getCommands(`${__dirname}/app`); // 메세지 명령
+client.system_app = getCommands(`${__dirname}/app`); // 앱 명령
 client.system_button = getCommands(`${__dirname}/button`); // 메세지 명령
 
 
