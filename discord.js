@@ -45,6 +45,7 @@ const voiceStateUpdate = require('#event/voiceStateUpdate');
 const guildCreate = require('#event/guildCreate');
 const guildDelete = require('#event/guildDelete');
 const threadDelete = require('#event/threadDelete');
+const threadUpdate = require('#event/threadUpdate');
 const shardError = require('#event/shardError');
 
 
@@ -59,6 +60,7 @@ client.on('guildCreate', guildCreate);
 client.on('guildDelete', guildDelete);
 
 client.on('threadDelete', threadDelete);
+client.on('threadUpdate', threadUpdate);
 
 client.on('shardError', shardError);
 
