@@ -46,9 +46,11 @@ function loadCmd(command, map, path) {
 		catch (e) {
 			console.error(e);
 			console.log(`[파일관리자] 파일 제거 - ${path}`);
-			const cmd = map.get(path);
-			command.delete(cmd.name);
-			map.delete(path);
+			try{
+				map.delete(path);
+				const cmd = map.get(path);
+				command.delete(cmd.name);
+			}catch(e){;}
 		}
 	};
 	reload();
