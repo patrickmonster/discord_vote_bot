@@ -41,7 +41,8 @@ module.exports = {
 			// 스레드 생성 후 해당하는 채널을 모니터링 영역에 삽입
 			const title = message.content || "첨부파일 주제로 토론이 시작되었습니다!";
 
-			return debate.create({
+			// ON DUPLICATE KEY UPDATE
+			return debate.upsert({
 				topic : message.content || "이미지",// 혹은 파일에 대한 토론 - 토론주제
 				owner : `${member.id}`,/// 토론 시작 -> 생성자
 				channel : `${channel.id}`, // 토론하는 스레드 (스레드만 가능) -> 차후 변경의 소지가 있음
@@ -86,6 +87,9 @@ module.exports = {
 토론 상대자의 사용자 이름을 지칭하였을 때에는 그 상대자와 얼굴을 마주하고 있지 않다는 점을 이용하여 상대자의 인격에 흠이 가는 낱말은 절대로 쓰지 않도록 합니다.
 토론 문서에 글을 쓰고 나서 상대자 또는 다른 참여자의 답변을 기다리는 인내를 갖도록 합니다.
 \`\`\`
+
+* 아카이브는 기본적으로 공개상태입니다.
+ - 모든 봇 이용자가 해당 주제를 탐색할 수도 있습니다!
 							`,
 						})
 					],
@@ -104,7 +108,7 @@ module.exports = {
 											value: '1',
 											default : false,
 										},
-										{
+											{
 											label: '5',
 											description: '장문의 타자로 치게 됩니다.',
 											value: '5',
@@ -140,15 +144,14 @@ module.exports = {
 								}),
 								new MessageButton({
 									label: `아카이브 해제`, style: 'PRIMARY',
-									customId: `debate close ${channel.id}`,
+									customId: `debate open ${channel.id}`,
 									disabled: true, emoji: { name: '💬' },
 								}),
 								new MessageButton({
-									label: `전체공유`, style: 'DANGER',// DANGER / PRIMARY
-									customId: `debate close ${channel.id}`,
+									label: `전체공유상태`, style: 'DANGER',// DANGER / PRIMARY
+									customId: `debate public ${channel.id}`,
 									disabled: false, emoji: { name: '📣' },
 								}),
-								
 								// new MessageButton({
 								// 	label: `토론내용을 XML`, style: 'PRIMARY',
 								// 	customId: `debate xml ${channel.id}`,
