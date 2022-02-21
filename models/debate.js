@@ -43,6 +43,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(20),
       allowNull: true,
       comment: "이벤트 ID"
+    },
+    public_yn: {
+      type: DataTypes.STRING(1),
+      allowNull: false,
+      defaultValue: "Y",
+      comment: "Y : 글로벌 \/ N : 로컬"
     }
   }, {
     sequelize,
