@@ -11,6 +11,13 @@ class HookManager {
 		console.log(`WEBHOOK]${id}.${token}`);
 	}
 
+	// 후크 가져오기
+	get(target){
+		return this.webhooks.has(target) ?
+			 this.webhooks.get(target) :
+			 this.webhooks.get("other");
+	}
+
 	send(target, message, username, avatar_url){
 		if(this.webhooks.has(target)){
 			this.webhooks.get(target).send({

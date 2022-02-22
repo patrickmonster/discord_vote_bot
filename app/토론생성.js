@@ -3,6 +3,7 @@ const name = path.basename(__filename,".js");
 
 const { debate } = require("#models");// 디비
 const createUser = require("#util/createUser");// 디비
+const archive = require("#util/archive");// 아카이브
 const { MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu } = require("discord.js");
 /**
  * 토론을 생성합니다.
@@ -19,7 +20,7 @@ module.exports = {
 	type : 3, // [chat input, user, message]
 	default_permission : true,
 	execute(interaction,message) {
-		const { member, guild,guildId, channel } = interaction;
+		const { member, guild,guildId, channel, client } = interaction;
 		if(message.hasThread){
 			interaction.reply({content : "해당주제의 토론은 이미 시작되었습니다!", ephemeral : true }).catch(_=>{});
 			return;
@@ -41,19 +42,20 @@ module.exports = {
 			// 스레드 생성 후 해당하는 채널을 모니터링 영역에 삽입
 			const title = message.content || "첨부파일 주제로 토론이 시작되었습니다!";
 
+			const stime = new Date();// 현재시간
+			const etime = new Date();// 현재시간
+			stime.setMinutes(stime.getMinutes() + 1);// 1분뒤 시작을 알림
+			etime.setDate(etime.getDate() + 1);// 24시간 뒤에 종료알림
+			
 			// ON DUPLICATE KEY UPDATE
 			return debate.upsert({
 				topic : message.content || "이미지",// 혹은 파일에 대한 토론 - 토론주제
 				owner : `${member.id}`,/// 토론 시작 -> 생성자
 				channel : `${channel.id}`, // 토론하는 스레드 (스레드만 가능) -> 차후 변경의 소지가 있음
-				start_at  : new Date(),
+				start_at  : stime,
+				end_at  : etime,
 				guild : `${guildId}`, // 진행중인 길드
 			}).then(_=>{ // 이벤트 생성
-				
-				const stime = new Date();// 현재시간
-				const etime = new Date();// 현재시간
-				stime.setMinutes(stime.getMinutes() + 1);// 1분뒤 시작을 알림
-				etime.setDate(etime.getDate() + 1);// 24시간 뒤에 종료알림
 				
 				return guild.scheduledEvents.create({
 					name : `${channel.id}토론이 시작되었습니다`,
@@ -69,6 +71,7 @@ module.exports = {
 
 				debate.update({ event : event.id }, { where : { channel : `${channel.id}` } }).catch(_=>{});
 				// 이벤트 추가
+				archive(client, channel.id);
 				return channel.send({
 					content : "토론이 생성되었습니다!",
 					embeds : [
@@ -156,7 +159,7 @@ module.exports = {
 								// 	label: `토론내용을 XML`, style: 'PRIMARY',
 								// 	customId: `debate xml ${channel.id}`,
 								// 	emoji: { name: '📈' },
-								// }),
+								// }), 
 							),
 					]
 				});
