@@ -15,8 +15,34 @@ module.exports = {
 	options : [],
 	default_permission : true,
 	execute(interaction,user) {
-		const { client, targetId, guild } = interaction;
-		
+		const { client } = interaction;
+		client._api.post(`/interactions/${interaction.id}/${interaction.token}/callback`, {
+			type : 9,
+			data : {
+				title : "추방 투표",
+				custom_id: "vote create user",
+				components: [
+					{
+						type: 1,
+						components: [
+							{
+								type: 4,
+								custom_id: `user ${user.id}`,
+								label: "추방할 사용자",
+								style: 1,
+								min_length: 1,
+								max_length: 100,
+								placeholder: "추방 투표할 사용자입니다.",
+								value :`${user.username}#${user.discriminator}`,
+								required: false
+							},
+						],
+					},
+				]
+			}
+		}).catch(e=>{
+			console.log(e.response);
+		})
 	},
 };
 

@@ -98,6 +98,21 @@ client.once('ready', () => {
 	});
 });
 // ///////////////////////////////////////////////////////////////////////////////////////////
+//  개조용 코드
+const interactionCreateHandle = client.actions.InteractionCreate.handle;
+client.actions.InteractionCreate.handle = function(packet){
+	const { type } = packet;
+	if(type == 5){
+		
+	}else interactionCreateHandle.call(this,packet)
+}
+
+// const handlePacket = client.handlePacket;
+// client.handlePacket = function(packet, shard){
+// 	console.log(packet, shard);
+// 	handlePacket(packet, shard);
+// }
+// ///////////////////////////////////////////////////////////////////////////////////////////
 // 봇 실행코드
 query("select",`value as code, arg0 as name FROM code a WHERE a.type='1'`).then((hooks) =>{
 	hooks.forEach(({code, name}) => { // 편집

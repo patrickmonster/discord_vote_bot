@@ -19,10 +19,11 @@ module.exports = {
 	required : false,
 	async execute(interaction, user, ...args) {
 		const { client } = interaction;
+
 		client._api.post(`/interactions/${interaction.id}/${interaction.token}/callback`, {
 			type : 9,
 			data : {
-				title : "토론 생성",
+				title : "토론 생성\n test",
 				custom_id: "debate create",
 				components: [
 					{
@@ -31,7 +32,7 @@ module.exports = {
 							{
 								type: 4,
 								custom_id: "title",
-								label: "토론주제",
+								label: "토론주제\n test",
 								style: 2,
 								min_length: 1,
 								max_length: 100,
@@ -39,7 +40,7 @@ module.exports = {
 								required: true
 							},
 						],
-					}
+					},
 				]
 			  }
 		}).catch(e=>{

@@ -24,6 +24,7 @@ function interactionSwitch(interaction){
  * @returns 
  */
 module.exports = function(interaction) {
+	console.log(interaction);
 	if (!interaction.inGuild() || interaction.user.bot) return;
 	if (interaction.customId?.startsWith("F")){
 		interaction.deferReply({fetchReply : false, ephemeral: true}).then(()=>{
