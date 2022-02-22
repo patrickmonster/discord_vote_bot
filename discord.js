@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 const { Client, Intents } = require('discord.js');
+const axios = require("axios");
 const { query } = require('#models');
 
 const path = require("path");
@@ -104,6 +105,7 @@ query("select",`value as code, arg0 as name FROM code a WHERE a.type='1'`).then(
 	});
 	return query("select",` value FROM code a WHERE idx=? AND a.type=0`, idx || 1);
 }).then(([{value}])=>{
+	client.api = axios.create({ headers: { 'Authorization': `Bot ${value}` } });
 	client.login(value);
 }).catch(e => {
 	console.error(e);
