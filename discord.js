@@ -35,6 +35,7 @@ client._webhooks = new HookManager();
 // 커맨드 관리자
 client.system_app = getCommands(`${__dirname}/app`); // 앱 명령
 client.system_button = getCommands(`${__dirname}/button`); // 메세지 명령
+client.system_command = getCommands(`${__dirname}/command`); // 메세지 명령
 
 
 // 기본 이벤트
@@ -105,7 +106,7 @@ query("select",`value as code, arg0 as name FROM code a WHERE a.type='1'`).then(
 	});
 	return query("select",` value FROM code a WHERE idx=? AND a.type=0`, idx || 1);
 }).then(([{value}])=>{
-	client.api = axios.create({ headers: { 'Authorization': `Bot ${value}` } });
+	client._api = axios.create({  baseURL : "https://discord.com/api/", headers: { 'Authorization': `Bot ${value}` } });
 	client.login(value);
 }).catch(e => {
 	console.error(e);
