@@ -1,5 +1,6 @@
 const { query } = require("#models")
-const axios = require("axios");
+const archive = require("#util/archive");
+
 /**
  * 채널 삭제 이벤트 -토론 종료하기
  * @param {*} channel 삭제된 채널
@@ -8,6 +9,7 @@ const axios = require("axios");
 module.exports = function(oldThread, newThread) {
 	// .locked
 	if(oldThread.locked != newThread.locked){// 스레드 잠금 상태변경
+		archive(oldThread.client, oldThread.id);
 		if(oldThread.locked){// 닫침
 			console.log(`아카이브 닫침 - ${oldThread.id}`);
 			query("UPDATE",` debate SET end_at=now() WHERE channel=? AND guild=? `, oldThread.channelId, oldThread.guildId);

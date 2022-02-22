@@ -14,7 +14,7 @@ FROM debate
 WHERE guild = ?
 AND channel = ?
 		`, id, author.id, guildId, channelId).then(()=>{
-			createActivity(id, guildId, author.id, 'd');
+			// createActivity(id, guildId, author.id, 'd');
 		}).catch(_=>{});
 	}else if(client.witelist?.includes(author.id)){// 관리자 명령 - DM채널
 		// 일단 생략

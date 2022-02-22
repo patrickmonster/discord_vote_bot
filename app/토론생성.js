@@ -140,26 +140,16 @@ module.exports = {
 							),
 						new MessageActionRow() //스레드에 관한 버튼처리 이벤트
 							.addComponents(
-								new MessageButton({
-									label: `아카이브`, style: 'PRIMARY',
-									customId: `debate close ${channel.id}`,
-									emoji: { name: '✔' },
+								new MessageButton({ // 토론을 차트로 출력
+									label: `차트`, style: 'PRIMARY',
+									customId: `debate chart ${channel.id}`,
+									emoji: { name: '📈' },
 								}),
 								new MessageButton({
-									label: `아카이브 해제`, style: 'PRIMARY',
-									customId: `debate open ${channel.id}`,
-									disabled: true, emoji: { name: '💬' },
-								}),
-								new MessageButton({
-									label: `전체공유상태`, style: 'DANGER',// DANGER / PRIMARY
+									label: `아카이브를 비공개로 전환`, style: 'DANGER',// DANGER / PRIMARY
 									customId: `debate public ${channel.id}`,
 									disabled: false, emoji: { name: '📣' },
 								}),
-								// new MessageButton({
-								// 	label: `토론내용을 XML`, style: 'PRIMARY',
-								// 	customId: `debate xml ${channel.id}`,
-								// 	emoji: { name: '📈' },
-								// }), 
 							),
 					]
 				});
