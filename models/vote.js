@@ -68,12 +68,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       comment: "설명"
     },
-    min: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1,
-      comment: "최소 투표인원"
-    },
     max: {
       type: DataTypes.INTEGER,
       allowNull: false,

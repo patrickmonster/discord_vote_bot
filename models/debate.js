@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('debate', {
     topic: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(200),
       allowNull: true,
       comment: "주제"
     },
@@ -49,6 +49,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: "Y",
       comment: "Y : 글로벌 \/ N : 로컬"
+    },
+    message: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      comment: "아카이브 알림 메세지"
     }
   }, {
     sequelize,
