@@ -21,16 +21,15 @@ const getCommands = require('./getCommands'); // 커맨드 관리자
 	return {
 		...cmd, // command, get, update
 		options,
-		execute : async function(interaction, user, subcommand, ...args){
+		execute : async function(interaction, subcommand, ...args){
 			const commend = cmd.get(subcommand);
 			if (commend) {
-				if(done) done(interaction);
-				// else if (!interaction.replied && !interaction.deferred) 
-				commend.execute(interaction, user, ...args);
+				if(done) done(interaction); 
+				commend.execute(interaction, ...args);
 			}
 			else {
 				if(typeof error == "function") error(interaction); 
-				else interaction.editReply({ content: error || '명령어를 찾지 못하였습니다.', ephemeral: true });
+				else interaction[interaction.replied ? 'editReply' : 'reply']({ content: error || '명령어를 찾지 못하였습니다.', ephemeral: true });
 			}
 		}
 	};

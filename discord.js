@@ -36,6 +36,7 @@ client._webhooks = new HookManager();
 client.system_app = getCommands(`${__dirname}/app`); // 앱 명령
 client.system_button = getCommands(`${__dirname}/button`); // 메세지 명령
 client.system_command = getCommands(`${__dirname}/command`); // 메세지 명령
+client.system_modal = getCommands(`${__dirname}/modal`); // 메세지 명령
 
 
 // 기본 이벤트
@@ -100,18 +101,13 @@ client.once('ready', () => {
 // ///////////////////////////////////////////////////////////////////////////////////////////
 //  개조용 코드
 const interactionCreateHandle = client.actions.InteractionCreate.handle;
+const ModalInteraction = new require("#util/ModalInteraction");
 client.actions.InteractionCreate.handle = function(packet){
-	const { type } = packet;
-	if(type == 5){
-		
+	if(packet.type==5){
+		const i = new ModalInteraction(this.client, packet);
+		interaction(i);
 	}else interactionCreateHandle.call(this,packet)
 }
-
-// const handlePacket = client.handlePacket;
-// client.handlePacket = function(packet, shard){
-// 	console.log(packet, shard);
-// 	handlePacket(packet, shard);
-// }
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // 봇 실행코드
 query("select",`value as code, arg0 as name FROM code a WHERE a.type='1'`).then((hooks) =>{

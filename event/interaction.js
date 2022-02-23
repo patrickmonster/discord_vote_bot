@@ -2,6 +2,7 @@ const clickCommand = require('#event/clickCommand');
 const clickButton = require('#event/clickButton');
 const clickMenu = require('#event/clickMenu');
 const clickApp = require('#event/clickApp');
+const clickModal = require('#event/clickModal');
 
 function interactionSwitch(interaction){
 	switch(interaction.targetType){
@@ -11,6 +12,8 @@ function interactionSwitch(interaction){
 			return clickApp(interaction, interaction.options.getMessage("message"));
 		case "CHAT_INPUT": // 
 			return clickCommand(interaction); // 명령 입력
+		case "MODAL": // 
+			return clickModal(interaction); // 명령 입력
 		default: // 버튼 및 기타 이벤트
 			interaction.isButton() && clickButton(interaction); // 버튼클릭
 			interaction.isSelectMenu() && clickMenu(interaction); // 매뉴클릭
@@ -24,9 +27,8 @@ function interactionSwitch(interaction){
  * @returns 
  */
 module.exports = function(interaction) {
-	console.log(interaction);
 	if (!interaction.inGuild() || interaction.user.bot) return;
-	if (interaction.customId?.startsWith("F")){
+	if (interaction.customId?.startsWith("d")){ // 사전에 응답을 먼저 처리함
 		interaction.deferReply({fetchReply : false, ephemeral: true}).then(()=>{
 			interactionSwitch(interaction);
 		}).catch(_=>{

@@ -6,7 +6,7 @@ module.exports = async function(interaction) {
 	const c = client.system_command.get(commandName);
 	
 	if (c) {
-		c.execute(interaction,null, interaction.options.getSubcommand(false));
+		c.execute(interaction, interaction.options.getSubcommand(false));
 	}
 	else {
 		interaction.deferReply({ ephemeral: true });
