@@ -10,6 +10,7 @@ const getCommands = require('#util/getCommands'); // 커맨드 관리자
 const [ idx ] = process.argv.slice(2);// 디버그 모드 (2이상)
 
 const app = getCommands(`${__dirname}/app`); // 앱 명령\
+const command = getCommands(`${__dirname}/command`); // 앱 명령\
 
 let discord;
 query("select",` value as token FROM code a WHERE idx=? AND a.type=0`, idx || 1).then(([{token}])=>{
@@ -21,7 +22,8 @@ query("select",` value as token FROM code a WHERE idx=? AND a.type=0`, idx || 1)
     return discord.put(
         Routes.applicationCommands(id),
         { body : [
-            ...app.getApp()
+            ...app.getApp(),
+            ...command.getApp()
         ]}
     );
 }).then((data)=>{
