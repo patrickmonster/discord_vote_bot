@@ -15,12 +15,17 @@ module.exports = {
 	options : [],
 	default_permission : true,
 	execute(interaction,user) {
-		const { client } = interaction;
+		const { client, member } = interaction;
+		if(client.user.id == user.id){
+			interaction.reply({ content : "현 봇은 추방투표로 추방이 불가능 합니다!" });
+		// }else if(member.id == user.id){
+		// 	interaction.reply({ content : "자기 자신을 추방투표로 추방이 불가능 합니다!" });
+		}else
 		client._api.post(`/interactions/${interaction.id}/${interaction.token}/callback`, {
 			type : 9,
 			data : {
 				title : "추방 투표",
-				custom_id: "vote create user",
+				custom_id: `vote create kick ${user.id}`,
 				components: [
 					{
 						type: 1,
@@ -38,6 +43,21 @@ module.exports = {
 							},
 						],
 					},
+					{
+						type: 1,
+						components: [
+							{
+								type: 4,
+								custom_id: `reason`,
+								label: "추방사유",
+								style: 2,
+								min_length: 1,
+								max_length: 1000,
+								placeholder: "다른사람이 보더라도, 납득 가능한 내용을 적어주세요!",
+								required: true
+							},
+						],
+					}
 				]
 			}
 		}).catch(e=>{

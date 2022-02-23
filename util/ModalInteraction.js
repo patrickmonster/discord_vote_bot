@@ -12,7 +12,7 @@ class ModalInteraction extends Interaction {
 		this.deferred = false;
 		this.replied = false;
 		this.ephemeral = null;
-		this.components = data.data.components?.map(({components}) =>components[0]);
+		this.components = data.data.components?.map(({components}) =>components[0]).map(({value,custom_id})=>({value,commandId : custom_id}));
 
 		this.webhook = new InteractionWebhook(this.client, this.applicationId, this.token);
 	}
