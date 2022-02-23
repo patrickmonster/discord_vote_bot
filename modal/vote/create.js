@@ -69,10 +69,8 @@ module.exports = {
 				break;
 		}
 		createVote(client,vote_data).then(embed =>{
-			console.log(embed);
 			const component = new MessageActionRow();
 			for (const i of ["arg0","arg1","arg2","arg3"]){
-				console.log(i, embed[i]);
 				if(embed[i])
 					component.addComponents(
 						new MessageButton({
@@ -81,7 +79,6 @@ module.exports = {
 						})
 					);
 			}
-			console.log(component);
 			interaction.reply({
 				embeds : [ new MessageEmbed({
 					title : embed.title,
