@@ -31,7 +31,7 @@ module.exports = {
 							{
 								type: 4,
 								custom_id: "title",
-								label: "투표제목",
+								label: "설명",
 								style: 2,
 								min_length: 10,
 								max_length: 4000,
@@ -46,7 +46,7 @@ module.exports = {
 							{
 								type: 4,
 								custom_id: "arg0",
-								label: "1번항목(파란색버튼)",
+								label: "1번항목",
 								style: 1,
 								min_length: 1,
 								max_length: 100,
@@ -61,12 +61,12 @@ module.exports = {
 							{
 								type: 4,
 								custom_id: "arg1",
-								label: "2번항목(빨간색버튼)",
+								label: "2번항목",
 								style: 1,
 								min_length: 1,
 								max_length: 100,
 								placeholder: "항목을 작성해 주세요",
-								required: true
+								required: false
 							},
 						],
 					},
@@ -76,7 +76,7 @@ module.exports = {
 							{
 								type: 4,
 								custom_id: "arg2",
-								label: "3번항목(초록색버튼)",
+								label: "3번항목",
 								style: 1,
 								min_length: 1,
 								max_length: 100,
@@ -91,7 +91,7 @@ module.exports = {
 							{
 								type: 4,
 								custom_id: "arg3",
-								label: "4번항목(검은색버튼)",
+								label: "4번항목",
 								style: 1,
 								min_length: 1,
 								max_length: 100,
